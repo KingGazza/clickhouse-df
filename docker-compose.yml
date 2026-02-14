@@ -6,7 +6,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2'
+          cpus: '1'
     container_name: clickhouse-server
     ports:
       - "8123:8123"  # HTTP (Portainer/DBeaver)
