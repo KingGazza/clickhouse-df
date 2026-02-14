@@ -3,6 +3,10 @@ version: '3.8'
 services:
   clickhouse:
     image: clickhouse/clickhouse-server:latest
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
     container_name: clickhouse-server
     ports:
       - "8123:8123"  # HTTP (Portainer/DBeaver)
@@ -25,8 +29,3 @@ services:
 volumes:
   clickhouse_data:
   clickhouse_logs:
-
-    deploy:
-          resources:
-            limits:
-              cpus: '2'
