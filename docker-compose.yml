@@ -5,14 +5,23 @@ services:
     image: clickhouse/clickhouse-server:latest
     container_name: clickhouse-server
     ports:
-      - "8123:8123"    # HTTP Interface
-      - "9000:9000"    # Native Client (TCP)
-      - "9440:9440"    # Secure Native Client
+      - "8123:8123"  # HTTP (Portainer/DBeaver)
+      - "9000:9000"  # TCP (Native Client)
+    environment:
+      # Define your credentials here
+      - CLICKHOUSE_USER=${CH_USER:-admin}
+      - CLICKHOUSE_PASSWORD=${CH_PASSWORD:-password123}
+      # Enables SQL-based user management (highly recommended for Portainer users)
+      - CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1
     volumes:
-      - ./ch_data:/var/lib/clickhouse  # Persistent data storage
-      - ./ch_logs:/var/log/clickhouse  # Logs (optional)
+      - clickhouse_data:/var/lib/clickhouse
+      - clickhouse_logs:/var/log/clickhouse
     ulimits:
       nofile:
         soft: 262144
         hard: 262144
     restart: always
+
+volumes:
+  clickhouse_data:
+  clickhouse_logs:
